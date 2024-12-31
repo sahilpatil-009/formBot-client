@@ -1,0 +1,95 @@
+.container{
+    min-height: 80vh;
+    width: 100%;
+    font-family: "Open Sans";
+    background-color: var(--formCreate-container-background);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pre_analyticbox{
+    margin-top: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 50%;
+    height: 120px;
+    margin-bottom: 30px;
+}
+
+.Views{
+    background-color: var(--userToolKit-options-bg);
+    padding: 15px 30px;
+    width: 100px;
+    height: 80px;
+    color: var(--formCreate-color);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 20px;
+}
+
+.Views h2{
+    font-weight: 400;
+}
+
+.Views p{
+    font-size: 24px;
+}
+
+.tableDiv{
+    width: 70%;
+    height:10%;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+.dataTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .dataTable th, .dataTable td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid var(--border-dark);
+  }
+  
+  .dataTable th {
+    color: var(--formCreate-color);
+  }
+  
+  .dataTable td {
+    font-size: 14px;
+    color: var(--formCreate-color);
+  }
+  
+  .dataTable td {
+    text-align: center;
+  }
+
+  .graphstyl{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .chartContainer {
+    width: 50%;
+    text-align: center;
+  }
+
+  .NoResponse{
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--userToolKit-options-bg);
+    user-select: none;
+  }

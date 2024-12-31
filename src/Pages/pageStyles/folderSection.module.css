@@ -1,0 +1,66 @@
+.container{
+    min-height: 100vh;
+    width: 100%;
+    font-family: "Open Sans";
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+    background: var(--background-color-dark-workspace);
+}
+
+/* folders nav */
+.foldersNav{
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.folderName{
+    color: var(--formCreate-color);
+    padding: 10px 10px;
+    background-color: var(--background-color-dark-workspace-folderName);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.activeFolder{
+    background-color: var(--active-folder-bg);
+    color: var(--active-folder-color);
+    font-weight: 600;
+}
+
+/* workspace styling */
+.WorkSpace{
+    width: 85%;
+    margin-bottom: 100px;   
+}
+
+.formCollect{
+    width: 95%;
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+    align-items: start;
+    gap: 20px;
+    padding: 0px 100px;
+}
+
+/* folde styling */
+.folder{
+    background-color: #1A5FFF;
+    color: var(--formCreate-color);
+    width: 200px;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}

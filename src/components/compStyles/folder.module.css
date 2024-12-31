@@ -1,0 +1,13 @@
+.folder{
+    background-color: #1A5FFF;
+    color: var(--text-color-dark-mode);
+    width: 200px;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}

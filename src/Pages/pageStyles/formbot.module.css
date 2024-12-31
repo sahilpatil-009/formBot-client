@@ -1,0 +1,187 @@
+.container{
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  font-family: "Open Sans";
+}
+
+.FormContainer{
+  width: 60%;
+  height: 50%;
+  margin: 20px 0px;
+  display: flex;
+  flex-direction: column;
+  gap:20px;
+}
+
+.bubble{
+  display: flex;
+  align-items: start;
+  gap: 5px;
+}
+
+.botImg{
+  width: 40px;
+  height: 40px;
+}
+
+.botImg img{
+  object-fit:contain;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.bubble p{
+  background-color: rgb(243, 237, 237);
+  padding: 5px 15px;
+  font-size: 18px;
+  border-radius: 10px;
+  flex-wrap: wrap;
+  word-wrap:break-word;
+}
+
+.UserInput{
+  display: flex;
+  width: 100%;
+  justify-content: end;
+}
+
+.UserInput p{
+  background-color: rgb(253, 182, 50);
+  padding: 5px 15px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 400;
+  border-radius: 10px;
+}
+
+.bubbleImage{
+  width: 45%;
+  height: 40%;
+}
+
+.bubbleImage img{
+  object-fit:contain;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.userResponse{
+  width: 30%;
+  margin: 10px 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  display: flex;
+  gap: 5px;
+}
+
+.userResponse input{
+  all: unset;
+  padding: 5px 10px;
+  width: 80%;
+}
+
+.userResponse button{
+  all: unset;
+  padding: 10px 10px;
+  background-color: blue;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.SubmtBtn{
+  all: unset;
+  float: right;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px 20px;
+  background-color: blue;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.ratings{
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+  padding: 5px 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+}
+
+.UserInput button{
+  all: unset;
+  padding: 10px 10px;
+  background-color: blue;
+  color: #fff;
+}
+
+.ratingItem{
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-content: center;
+  font-size: 18px;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 50%;
+  background-color: blue;
+}
+
+.selectedRating {
+  background-color: orange;
+  color: white;
+} 
+
+/* Responsive */
+@media only screen and (max-width:770px){
+  .FormContainer{
+    width: 80%;
+  }
+  .bubble p{
+    font-size: 16px;
+  }
+  .UserInput p{
+    font-size: 16px;
+  }
+
+}
+@media only screen and (max-width:600px){
+  .FormContainer{
+    width: 90%;
+  }
+
+  .userResponse{
+    width: 40%;
+  }
+
+  .userResponse input{
+    width: 90%;
+  }
+  .bubble p{
+    font-size: 15px;
+  }
+  .UserInput p{
+    font-size: 15px;
+  }
+
+}
+
+@media only screen and (max-width:425px){
+  .userResponse{
+    width: 60%;
+    font-size: 15px;
+  }
+  .bubble p{
+    font-size: 14px;
+  }
+  .UserInput p{
+    font-size: 14px;
+  }
+  .botImg{
+    width: 25px;
+    height: 25px;
+  }
+}

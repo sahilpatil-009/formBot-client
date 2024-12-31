@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+:root {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* default dark theme */
+  --background-color-dark-workspace: linear-gradient(0deg, #121212, #121212),
+    linear-gradient(0deg, #18181b, #18181b);
+  --background-color-dark-workspace-folderName: #ffffff14;
+  --text-color-dark-mode: #fff;
+  --folder-dlt-bg-color: #444444;
+  --form-bg-dark-color: #ffffff80;
+  --border-dark: #ffffff29;
+  --formCreate-container-background: #1f1f23;
+  --formCreate-Navbar-bg-color: linear-gradient(0deg, #121212, #121212),
+    linear-gradient(0deg, #18181b, #18181b);
+  --formCreate-color: #fff;
+  --userTookKit-background: linear-gradient(0deg, #121212, #121212),
+    linear-gradient(0deg, #18181b, #18181b);
+  --userToolKit-border: #ffffff29;
+  --userToolKit-options-bg: #ffffff14;
+  --formFields-background: #18181b;
+  --msgField-background-color: #1f1f23;
+  --hint-msg: #555555;
+  --active-folder-bg:#fff;
+  --active-folder-color:#000;
+}
+
+/* light mode */
+[data-theme="light"] {
+  --background-color-dark-workspace: #fff;
+  --background-color-dark-workspace-folderName: #9c868614;
+  --text-color-dark-mode: #000;
+  --folder-dlt-bg-color: #d8d4d4;
+  --form-bg-dark-color: #766f6f80;
+  --border-dark: #05050529;
+
+  --formCreate-container-background: #fff;
+  --formCreate-Navbar-bg-color: #fff;
+  --formCreate-color: #000;
+  --userTookKit-background: #fff;
+  --userToolKit-border: #00000029;
+  --userToolKit-options-bg: #f1f0f0;
+  --formFields-background: #f1f0f0;
+  --msgField-background-color: #fff;
+  --hint-msg: #646262;
+  --active-folder-bg:#000;
+  --active-folder-color:#fff;
+}

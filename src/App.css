@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+}
+
+body,html{
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px; 
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #171923; 
+  border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3b405a; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5270;
+}

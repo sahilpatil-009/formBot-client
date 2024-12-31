@@ -1,0 +1,67 @@
+.main{
+    background-color: rgba(0, 0, 0, 0.7); 
+    inset: 0;
+    color: white;
+    position: fixed;
+    display: grid;
+    place-items: center;
+}
+.container{
+    width: 500px;
+    height: 300px;
+    border: 2px solid #1F1F23;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 20px;
+    padding: 0px 30px;
+    background-color: #121212;
+    border-radius: 15px;
+    position: relative;
+}
+
+.container h1{
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.worningMsg{  
+    width: 100%;
+    color: red;
+    visibility: hidden;  
+}
+
+.container input{
+    all: unset;
+    background-color: #1F1F23;
+    padding: 20px 10px;
+    font-size: 16px;
+    width: 95%;
+    border-radius: 10px;
+}
+
+.userBtns{
+    width: 100%;
+    display: flex;
+}
+
+.userBtns button{
+    all: unset;
+    border-right: 4px solid #1F1F23;
+    text-align: center;
+    width: 50%;
+    padding: 10px 20px;
+    font-size: 24px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.userBtns button:nth-child(2){
+    border: none;
+}
+
+.userBtns button:hover{
+    color: #4B83FF;
+}
