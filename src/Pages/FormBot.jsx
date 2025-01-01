@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./pageStyles/formbot.module.css";
-import Loader from "../components/Loder";
 import logo from "../assets/formBotLogo.png";
 import { IoSend } from "react-icons/io5";
 import { useParams } from "react-router-dom";
@@ -14,7 +13,6 @@ import {
 const FormBot = () => {
   var { formid } = useParams();
 
-  const [loading, setLoading] = useState(true);
   const [userResponse, setUserResponse] = useState([]); // Store all user responses
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentInput, setCurrentInput] = useState("");
@@ -28,7 +26,6 @@ const FormBot = () => {
   const [formDetails, setFormformDetails] = useState();
 
   const getFormDetails = async () => {
-    setLoading(true);
     try {
       const res = await getFormDetailsForBot(formid);
       const data = await res.json();
@@ -39,7 +36,6 @@ const FormBot = () => {
     } catch (error) {
       console.log(error);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -116,23 +112,17 @@ const FormBot = () => {
         form: formid,
       };
 
-      try {
-        setLoading(true);
-        const res = await submitResponse(ResponseData);
-        const data = await res.json();
-        if (res.status == 200) {
-          alert(data.message);
-          setResonSubmit(true);
-        } else {
-          alert(data.message);
-        }
-      } catch (error) {
-        console.log(error);
+      const res = await submitResponse(ResponseData);
+      const data = await res.json();
+      if (res.status == 200) {
+        alert(data.message);
+        setResonSubmit(true);
+      } else {
+        alert(data.message);
       }
     } else {
       alert("form Already Submitted");
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -156,106 +146,102 @@ const FormBot = () => {
 
   return (
     <div className={styles.container}>
-      {loading ? (
-        <Loader />
-      ) : (
-        <div className={styles.FormContainer}>
-          {formDetails &&
-            formDetails.map((bubble, index) => {
-              if (index <= currentIndex) {
-                switch (bubble.inputType) {
-                  case "Bubble":
-                    return bubble.type === "image" ? (
-                      <div key={index} className={styles.bubble}>
-                        <div className={styles.botImg}>
-                          <img src={logo} alt="Bot" />
-                        </div>
-                        <div className={styles.bubbleImage}>
-                          <img src={bubble.showValue} alt={bubble.name} />
-                        </div>
+      <div className={styles.FormContainer}>
+        {formDetails &&
+          formDetails.map((bubble, index) => {
+            if (index <= currentIndex) {
+              switch (bubble.inputType) {
+                case "Bubble":
+                  return bubble.type === "image" ? (
+                    <div key={index} className={styles.bubble}>
+                      <div className={styles.botImg}>
+                        <img src={logo} alt="Bot" />
                       </div>
-                    ) : (
-                      <div key={index} className={styles.bubble}>
-                        <div className={styles.botImg}>
-                          <img src={logo} alt="Bot" />
-                        </div>
-                        <p>{bubble.showValue}</p>
+                      <div className={styles.bubbleImage}>
+                        <img src={bubble.showValue} alt={bubble.name} />
+                      </div>
+                    </div>
+                  ) : (
+                    <div key={index} className={styles.bubble}>
+                      <div className={styles.botImg}>
+                        <img src={logo} alt="Bot" />
+                      </div>
+                      <p>{bubble.showValue}</p>
+                    </div>
+                  );
+
+                case "Input":
+                  const existingResponse = userResponse.find(
+                    (response) => response.name === bubble.name
+                  );
+
+                  if (bubble.type === "button") {
+                    return (
+                      <div key={index} className={styles.UserInput}>
+                        <button
+                          className={styles.SubmtBtn}
+                          onClick={handleSubmit}
+                          style={{ borderRadius: "10px" }}
+                        >
+                          Submit
+                        </button>
                       </div>
                     );
+                  }
 
-                  case "Input":
-                    const existingResponse = userResponse.find(
-                      (response) => response.name === bubble.name
-                    );
-
-                    if (bubble.type === "button") {
-                      return (
-                        <div key={index} className={styles.UserInput}>
-                          <button
-                            className={styles.SubmtBtn}
-                            onClick={handleSubmit}
-                            style={{ borderRadius: "10px" }}
-                          >
-                            Submit
-                          </button>
+                  if (bubble.type === "rating" && !existingResponse) {
+                    return (
+                      <div key={index} className={styles.UserInput}>
+                        <div className={styles.ratings}>
+                          {[1, 2, 3, 4, 5].map((rating) => (
+                            <div
+                              key={rating}
+                              className={`${styles.ratingItem} ${
+                                selectedRating === rating
+                                  ? styles.selectedRating
+                                  : ""
+                              }`}
+                              onClick={() => handleRatingClick(rating)}
+                            >
+                              {rating}
+                            </div>
+                          ))}
                         </div>
-                      );
-                    }
+                        <button onClick={handleSubmitResponse}>
+                          <IoSend />
+                        </button>
+                      </div>
+                    );
+                  }
 
-                    if (bubble.type === "rating" && !existingResponse) {
-                      return (
-                        <div key={index} className={styles.UserInput}>
-                          <div className={styles.ratings}>
-                            {[1, 2, 3, 4, 5].map((rating) => (
-                              <div
-                                key={rating}
-                                className={`${styles.ratingItem} ${
-                                  selectedRating === rating
-                                    ? styles.selectedRating
-                                    : ""
-                                }`}
-                                onClick={() => handleRatingClick(rating)}
-                              >
-                                {rating}
-                              </div>
-                            ))}
-                          </div>
+                  return existingResponse ? (
+                    <div className={styles.UserInput} key={index}>
+                      <p>{existingResponse.value}</p>
+                    </div>
+                  ) : (
+                    waitingForInput && (
+                      <div className={styles.UserInput} key={index}>
+                        <div className={styles.userResponse}>
+                          <input
+                            type={bubble.type}
+                            name={bubble.name}
+                            onChange={handleInputChange}
+                          />
                           <button onClick={handleSubmitResponse}>
                             <IoSend />
                           </button>
                         </div>
-                      );
-                    }
-
-                    return existingResponse ? (
-                      <div className={styles.UserInput} key={index}>
-                        <p>{existingResponse.value}</p>
                       </div>
-                    ) : (
-                      waitingForInput && (
-                        <div className={styles.UserInput} key={index}>
-                          <div className={styles.userResponse}>
-                            <input
-                              type={bubble.type}
-                              name={bubble.name}
-                              onChange={handleInputChange}
-                            />
-                            <button onClick={handleSubmitResponse}>
-                              <IoSend />
-                            </button>
-                          </div>
-                        </div>
-                      )
-                    );
+                    )
+                  );
 
-                  default:
-                    return null;
-                }
+                default:
+                  return null;
               }
-              return null;
-            })}
-        </div>
-      )}
+            }
+            return null;
+          })}
+      </div>
     </div>
   );
 };
