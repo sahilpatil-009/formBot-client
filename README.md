@@ -1,1 +1,1 @@
-Live link -> https://formbot-six.vercel.app/
+Live link -> https://form-bot-psi.vercel.app/
