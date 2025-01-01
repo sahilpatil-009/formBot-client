@@ -41,9 +41,8 @@
 
 .tableDiv{
     width: 70%;
-    height:10%;
-    overflow-y: scroll;
-    overflow-x: scroll;
+    height: 200px;
+    overflow: auto;
 }
 
 .dataTable {

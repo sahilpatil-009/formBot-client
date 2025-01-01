@@ -7,9 +7,11 @@ import { FaPlus } from "react-icons/fa6";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import FormmFormat from "../components/FormmFormat";
+import Loader from "../components/Loder";
 
 const FolderSection = () => {
   const { id } = useParams();
+  const [loading, setLoading] = useState(true);
   const [allFolders, setAllFolders] = useState([]);
   const [selectedFolder, setSelectedFolder] = useState(null);
   const [allForms, setAllForms] = useState([]);
@@ -18,16 +20,19 @@ const FolderSection = () => {
 
   const getAllfolders = async () => {
     try {
+      setLoading(true);
       const res = await getAllFolder();
       const data = await res.json();
       setAllFolders(data.folders);
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   const handleDeleteForm = async (id) => {
     try {
+      setLoading(true);
       const res = await deleteForm(id);
       const data = await res.json();
       if (res.status == 200) {
@@ -39,6 +44,7 @@ const FolderSection = () => {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -55,6 +61,7 @@ const FolderSection = () => {
   return (
     <div className={styles.container}>
       <WorkSpaceNavbar />
+      {loading ? <Loader /> : <>
       <div className={styles.foldersNav}>
         <div
           className={styles.folderName}
@@ -94,6 +101,7 @@ const FolderSection = () => {
             ))}
         </div>
       </div>
+      </>}
     </div>
   );
 };

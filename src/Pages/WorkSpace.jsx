@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./pageStyles/workspace.module.css";
 import { FaPlus } from "react-icons/fa6";
+import  Loader  from "../components/Loder"
 import { AiOutlineFolderAdd } from "react-icons/ai";
 import CreatFolder from "./modals/CreatFolder";
 import {
@@ -24,9 +25,11 @@ import {
 } from "../services/user.services";
 
 const WorkSpace = () => {
+
   const [showCreateModel, setShowCreateModel] = useState(false);
   const [showDeleteModel, setDeleteCreateModel] = useState(false);
   const [showShareModel, setShowShareModel] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [folderToDelete, setFolderToDelete] = useState(null);
   const [allFolders, setAllFolders] = useState();
@@ -81,17 +84,20 @@ const WorkSpace = () => {
   // get All User Created folders
   const getAllfolders = async () => {
     try {
+      setLoading(true);
       const res = await getAllFolder();
       const data = await res.json();
       setAllFolders(data.folders);
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   // handle deletion for folder
   const handleFolderDelete = async (id) => {
     try {
+      setLoading(true);
       const res = await deleteFolder(id);
       const data = await res.json();
       if (res.status === 200) {
@@ -103,12 +109,13 @@ const WorkSpace = () => {
     } catch (error) {
       console.log(error);
     }
-    console.log(id);
+    setLoading(false);
   };
 
   // get user created form at Workspace in global space
   const getGlobalForms = async () => {
     try {
+      setLoading(true);
       const res = await getFormsAtWorkSpace();
       const data = await res.json();
       if (res.status == 200) {
@@ -117,11 +124,13 @@ const WorkSpace = () => {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   // handle user created Form deletion
   const handleDeleteForm = async (id) => {
     try {
+      setLoading(true);
       const res = await deleteForm(id);
       const data = await res.json();
       if (res.status == 200) {
@@ -133,6 +142,7 @@ const WorkSpace = () => {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   // get User Details
@@ -167,6 +177,7 @@ const WorkSpace = () => {
         myWorkSpaces={myWorkSpaces}
         handleSelectedWorkSpace={handleSelectedWorkSpace}
       />
+      { loading ? <Loader /> : <>
       <div className={styles.foldersNav}>
         <div
           className={styles.folderName}
@@ -237,6 +248,7 @@ const WorkSpace = () => {
           userData={userData}
         />
       )}
+      </> }
     </div>
   );
 };

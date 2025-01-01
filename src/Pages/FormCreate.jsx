@@ -10,8 +10,10 @@ import { GoImage } from "react-icons/go";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { ThemeContext } from "../Contexts/ThemeProvider";
 import FormAnalytics from "./FormAnalytics";
+import Loader from "../components/Loder";
 
 const FormCreate = () => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState([]);
   const [formName, setFormName] = useState("");
   const [showForm, setShowForm] = useState(false);
@@ -32,6 +34,7 @@ const FormCreate = () => {
   // get formdetails by id
   const handelGetFromById = async (id) => {
     try {
+      setLoading(true);
       const res = await getFormById(id);
       const data = await res.json();
       if (res.status == 200) {
@@ -43,6 +46,7 @@ const FormCreate = () => {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   const incrementCount = (type, category) => {
@@ -139,11 +143,14 @@ const FormCreate = () => {
 
   const handleCopyLink = () => {
     const link = `${window.location.origin}/form-bot/${formid}`;
-    navigator.clipboard.writeText(link).then(() => {
-      alert("Form link copied to clipboard!");
-    }).catch((err) => {
-      alert("Failed to copy the link: " + err);
-    });
+    navigator.clipboard
+      .writeText(link)
+      .then(() => {
+        alert("Form link copied to clipboard!");
+      })
+      .catch((err) => {
+        alert("Failed to copy the link: " + err);
+      });
   };
 
   const getHintMessage = (type) => {
@@ -170,152 +177,163 @@ const FormCreate = () => {
       (item) => item.inputType === "Input" && item.type === "button"
     );
   };
-  
 
   return (
     <div className={styles.container}>
-      <FormmNav
-        setFormName={setFormName}
-        formName={formName}
-        handleSaveForm={handleSaveForm}
-        saveButtonDisabled={showForm || !isSaveEnabled()}
-        showForm={showForm}
-        formid={formid}
-        handleCopyLink={handleCopyLink}
-        setFlowTab={setFlowTab}
-        flowTab={flowTab}
-      />
-      {flowTab ? (
-      <div className={styles.formCreatinSpace}>
-        <UserTookKit addNewBubble={addNewBubble} addNewInput={addNewInput} />
-        <div className={styles.FormSection}>
-          <div className={styles.startFlag}>
-            <GrFlagFill size={22} />
-            Start
-          </div>
-
-          {formData &&
-            formData.map((item, index) => {
-              switch (item.inputType) {
-                case "Bubble": {
-                  switch (item.type) {
-                    case "text":
-                      return (
-                        <div key={index} className={styles.UserFields}>
-                          {!showForm && (
-                            <div
-                              className={styles.dlticon}
-                              onClick={() => handleDelete(index)}
-                            >
-                              <RiDeleteBin6Line size={20} color="red" />
-                            </div>
-                          )}
-                          <p className={styles.selectedFields}>{item.name}</p>
-                          <div
-                            className={styles.msgField}
-                            style={{
-                              border:
-                                item.showValue.trim() == ""
-                                  ? "1px solid red"
-                                  : "",
-                            }}
-                          >
-                            <LuMessageSquare size={20} color="#4B83FF" />
-                            <input
-                              type="text"
-                              placeholder="Click here to edit"
-                              value={item.showValue}
-                              onChange={(e) =>
-                                handleInputChange(index, e.target.value)
-                              }
-                            />
-                          </div>
-                          <p
-                            className={styles.worningMsg}
-                            style={{
-                              visibility:
-                                item.showValue.trim() == ""
-                                  ? "visible"
-                                  : "hidden",
-                            }}
-                          >
-                            Required Field
-                          </p>
-                        </div>
-                      );
-
-                    case "image":
-                      return (
-                        <div key={index} className={styles.UserFields}>
-                          {!showForm && (
-                            <div
-                              className={styles.dlticon}
-                              onClick={() => handleDelete(index)}
-                            >
-                              <RiDeleteBin6Line size={20} color="red" />
-                            </div>
-                          )}
-                          <p className={styles.selectedFields}>{item.name}</p>
-                          <div
-                            className={styles.msgField}
-                            style={{
-                              border:
-                                item.showValue.trim() == ""
-                                  ? "1px solid red"
-                                  : "",
-                            }}
-                          >
-                            <GoImage size={20} color="#4B83FF" />
-                            <input
-                              type="text"
-                              placeholder="Click here to add link"
-                              value={item.showValue}
-                              onChange={(e) =>
-                                handleInputChange(index, e.target.value)
-                              }
-                            />
-                          </div>
-                          <p
-                            className={styles.worningMsg}
-                            style={{
-                              visibility:
-                                item.showValue.trim() == ""
-                                  ? "visible"
-                                  : "hidden",
-                            }}
-                          >
-                            Required Image URL
-                          </p>
-                        </div>
-                      );
-                  }
-                }
-                case "Input":
-                  return (
-                    <div className={styles.UserFields} key={index}>
-                      {!showForm && (
-                        <div
-                          className={styles.dlticon}
-                          onClick={() => handleDelete(index)}
-                        >
-                          <RiDeleteBin6Line size={20} color="red" />
-                        </div>
-                      )}
-                      <p className={styles.selectedFields}>{item.name}</p>
-                      <p className={styles.hintInput}>
-                        {getHintMessage(item.type)}
-                      </p>
-                    </div>
-                  );
-              }
-            })}
-        </div>
-      </div>
+      {loading ? (
+        <Loader />
       ) : (
-          <FormAnalytics formid={formid}/>
+        <>
+          <FormmNav
+            setFormName={setFormName}
+            formName={formName}
+            handleSaveForm={handleSaveForm}
+            saveButtonDisabled={showForm || !isSaveEnabled()}
+            showForm={showForm}
+            formid={formid}
+            handleCopyLink={handleCopyLink}
+            setFlowTab={setFlowTab}
+            flowTab={flowTab}
+          />
+          {flowTab ? (
+            <div className={styles.formCreatinSpace}>
+              <UserTookKit
+                addNewBubble={addNewBubble}
+                addNewInput={addNewInput}
+              />
+              <div className={styles.FormSection}>
+                <div className={styles.startFlag}>
+                  <GrFlagFill size={22} />
+                  Start
+                </div>
+
+                {formData &&
+                  formData.map((item, index) => {
+                    switch (item.inputType) {
+                      case "Bubble": {
+                        switch (item.type) {
+                          case "text":
+                            return (
+                              <div key={index} className={styles.UserFields}>
+                                {!showForm && (
+                                  <div
+                                    className={styles.dlticon}
+                                    onClick={() => handleDelete(index)}
+                                  >
+                                    <RiDeleteBin6Line size={20} color="red" />
+                                  </div>
+                                )}
+                                <p className={styles.selectedFields}>
+                                  {item.name}
+                                </p>
+                                <div
+                                  className={styles.msgField}
+                                  style={{
+                                    border:
+                                      item.showValue.trim() == ""
+                                        ? "1px solid red"
+                                        : "",
+                                  }}
+                                >
+                                  <LuMessageSquare size={20} color="#4B83FF" />
+                                  <input
+                                    type="text"
+                                    placeholder="Click here to edit"
+                                    value={item.showValue}
+                                    onChange={(e) =>
+                                      handleInputChange(index, e.target.value)
+                                    }
+                                  />
+                                </div>
+                                <p
+                                  className={styles.worningMsg}
+                                  style={{
+                                    visibility:
+                                      item.showValue.trim() == ""
+                                        ? "visible"
+                                        : "hidden",
+                                  }}
+                                >
+                                  Required Field
+                                </p>
+                              </div>
+                            );
+
+                          case "image":
+                            return (
+                              <div key={index} className={styles.UserFields}>
+                                {!showForm && (
+                                  <div
+                                    className={styles.dlticon}
+                                    onClick={() => handleDelete(index)}
+                                  >
+                                    <RiDeleteBin6Line size={20} color="red" />
+                                  </div>
+                                )}
+                                <p className={styles.selectedFields}>
+                                  {item.name}
+                                </p>
+                                <div
+                                  className={styles.msgField}
+                                  style={{
+                                    border:
+                                      item.showValue.trim() == ""
+                                        ? "1px solid red"
+                                        : "",
+                                  }}
+                                >
+                                  <GoImage size={20} color="#4B83FF" />
+                                  <input
+                                    type="text"
+                                    placeholder="Click here to add link"
+                                    value={item.showValue}
+                                    onChange={(e) =>
+                                      handleInputChange(index, e.target.value)
+                                    }
+                                  />
+                                </div>
+                                <p
+                                  className={styles.worningMsg}
+                                  style={{
+                                    visibility:
+                                      item.showValue.trim() == ""
+                                        ? "visible"
+                                        : "hidden",
+                                  }}
+                                >
+                                  Required Image URL
+                                </p>
+                              </div>
+                            );
+                        }
+                      }
+                      case "Input":
+                        return (
+                          <div className={styles.UserFields} key={index}>
+                            {!showForm && (
+                              <div
+                                className={styles.dlticon}
+                                onClick={() => handleDelete(index)}
+                              >
+                                <RiDeleteBin6Line size={20} color="red" />
+                              </div>
+                            )}
+                            <p className={styles.selectedFields}>{item.name}</p>
+                            <p className={styles.hintInput}>
+                              {getHintMessage(item.type)}
+                            </p>
+                          </div>
+                        );
+                    }
+                  })}
+              </div>
+            </div>
+          ) : (
+            <FormAnalytics formid={formid} />
+          )}
+          <div></div>
+        </>
       )}
-      <div>
-      </div>
     </div>
   );
 };
