@@ -1,4 +1,4 @@
-const URL = "http://localhost:8000";
+const URL = "https://formbot-server-r31d.onrender.com";
 
 // register new user
 export const registerUser = async (data) => {

@@ -1,4 +1,4 @@
-const URL = "http://localhost:8000";
+const URL = "https://formbot-server-r31d.onrender.com";
 
 //get all user created folders
 export const getAllFolder = async () => {
