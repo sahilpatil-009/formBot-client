@@ -7,10 +7,12 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { userLogin } from "../services/user.services";
 import { FcGoogle } from "react-icons/fc";
+import Loader from "../components/Loder";
 
 const Login = () => {
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
   // if user already login mot require to login again 
   // via token directly naviagte to user workspace
   useEffect(() => {
@@ -34,12 +36,15 @@ const Login = () => {
 
   // handle user Login
   const handleLoginSubmit = async (e) => {
+
     e.preventDefault();
+
     if (!validationInput()) {
       return console.log("All fields Required !");
     }
 
     try {
+      setLoading(true);
       const loginData = {
         email: email,
         password: password,
@@ -57,6 +62,8 @@ const Login = () => {
     } catch (error) {
       console.log(error);
     }
+
+    setLoading(false);
   };
   return (
     <>
@@ -64,6 +71,7 @@ const Login = () => {
         <FaArrowLeft size={28} onClick={() => navigate("/")} />
       </div>
       <div className={styles.container}>
+      {loading ? <Loader/> : 
         <form onSubmit={handleLoginSubmit}>
           <div className={styles.logindiv}>
             <div className={styles.email}>
@@ -121,8 +129,8 @@ const Login = () => {
               <a onClick={() => navigate("/register")}>Register Now</a>
             </p>
           </div>
-        </form>
-      </div>
+        </form> }
+      </div> 
       <div className={styles.triangle}>
         <img src={triangle2} />
       </div>
