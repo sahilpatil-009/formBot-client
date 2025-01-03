@@ -40,6 +40,14 @@ const WorkSpace = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+      if (localStorage.getItem("token")) {
+        navigate("/workspace");
+      }else{
+        navigate("/login");
+      }
+    }, []);
+
   // get all prevoius shared workspaces
   const getWorkSpaces = async () => {
     try {
@@ -47,6 +55,7 @@ const WorkSpace = () => {
       const data = await res.json();
       if (res.status == 200) {
         setMyWorkSpaces(data.WorkSpaces);
+        console.log(data.WorkSpaces);
       } else {
         console.log(data.message);
       }
